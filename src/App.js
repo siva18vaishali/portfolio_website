@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram} from "react-icons/fa";
 import { GraduationCap, School, BookOpen} from "lucide-react";
 import { Download, Target, Heart, Code } from "lucide-react";
@@ -6,7 +6,36 @@ import DarkModeToggle from "./components/DarkModeToggle";
 import Scrollspy from "react-scrollspy";  
 
 
+
 function Navbar() {
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'projects', 'skills', 'about', 'education', 'contact'];
+      const scrollY = window.pageYOffset + 100;
+
+      sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+
+          if (scrollY >= offsetTop && scrollY < offsetBottom) {
+            setActiveSection(section);
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (section) => activeSection === section;
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow z-50 border-b border-white/20 transition-colors duration-300">
       <div className="container mx-auto flex items-center justify-between p-4">
@@ -22,26 +51,76 @@ function Navbar() {
           </span>
         </div>
 
-        {/* Navigation with Scrollspy */}
-        <Scrollspy
-          items={['home', 'projects', 'skills', 'about', 'education', 'contact']}
-          currentClassName="text-blue-600 dark:text-purple-400 font-semibold underline underline-offset-4"
-          componentTag="nav"
-          className="space-x-6 hidden md:flex"
-        >
-          <a href="#home" className="cursor-pointer transition-colors duration-300">Home</a>
-          <a href="#projects" className="cursor-pointer transition-colors duration-300">Projects</a>
-          <a href="#skills" className="cursor-pointer transition-colors duration-300">Skills</a>
-          <a href="#about" className="cursor-pointer transition-colors duration-300">About Me</a>
-          <a href="#education" className="cursor-pointer transition-colors duration-300">Education</a>
-          <a href="#contact" className="cursor-pointer transition-colors duration-300">Contact</a>
-          <DarkModeToggle />
-        </Scrollspy>
+        {/* Navigation with colored translucent capsules */}
+        <nav className="hidden md:flex items-center space-x-1 p-1.5 bg-white/10 dark:bg-gray-900/10 backdrop-blur-md rounded-full border border-white/20 dark:border-gray-700/20 shadow-lg">
+          <a 
+            href="#home" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('home') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            Home
+          </a>
+          <a 
+            href="#projects" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('projects') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            Projects
+          </a>
+          <a 
+            href="#skills" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('skills') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            Skills
+          </a>
+          <a 
+            href="#about" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('about') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            About Me
+          </a>
+          <a 
+            href="#education" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('education') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            Education
+          </a>
+          <a 
+            href="#contact" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('contact') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            Contact
+          </a>
+          <div className="pl-2">
+            <DarkModeToggle />
+          </div>
+        </nav>
       </div>
     </header>
   );
 }
-
 
 
 
@@ -411,43 +490,49 @@ function Contact() {
     setStatus("Sending...");
 
     try {
-      // Use your deployed backend URL
-      const res = await fetch("https://portfolio-backend-r2sm.onrender.com/contact", {
+      const res = await fetch("http://127.0.0.1:5000/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-
       if (res.ok) {
         setStatus("✅ Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        setStatus(`❌ ${data.message || "Failed to send message."}`);
+        setStatus("❌ Failed to send.");
       }
     } catch (error) {
       console.error(error);
-      setStatus("⚠️ Network error. Please try again.");
+      setStatus("⚠️ Error occurred.");
     }
   };
 
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-6 py-12 transition-colors duration-300"
+      className="min-h-screen flex flex-col items-center justify-center 
+      bg-gradient-to-r from-blue-50 to-purple-50 
+      dark:from-gray-900 dark:to-gray-800 
+      px-6 py-12 transition-colors duration-300"
     >
-      <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Get in Touch</h2>
+      <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+        Get in Touch
+      </h2>
       <p className="text-gray-600 dark:text-gray-300 mb-8 text-center max-w-xl">
         Feel free to reach out for collaborations, opportunities, or just to say hi!
       </p>
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 space-y-4 transition-colors duration-300"
+        className="w-full max-w-lg bg-white dark:bg-gray-800 
+        shadow-lg rounded-2xl p-8 space-y-4 
+        transition-colors duration-300"
       >
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Name</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Name
+          </label>
           <input
             type="text"
             name="name"
@@ -455,12 +540,16 @@ function Contact() {
             onChange={handleChange}
             placeholder="Your Name"
             required
-            className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border border-gray-300 dark:border-gray-600 
+            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -468,12 +557,16 @@ function Contact() {
             onChange={handleChange}
             placeholder="Your Email"
             required
-            className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border border-gray-300 dark:border-gray-600 
+            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Message</label>
+          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Message
+          </label>
           <textarea
             name="message"
             value={formData.message}
@@ -481,19 +574,27 @@ function Contact() {
             placeholder="Your Message"
             rows="4"
             required
-            className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border border-gray-300 dark:border-gray-600 
+            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
           ></textarea>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-2 px-6 rounded-lg hover:opacity-90 transition"
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 
+          text-white font-semibold py-2 px-6 rounded-lg 
+          hover:opacity-90 transition"
         >
           Send Message
         </button>
       </form>
 
-      {status && <p className="mt-4 text-gray-700 dark:text-gray-300 transition-colors duration-300">{status}</p>}
+      {status && (
+        <p className="mt-4 text-gray-700 dark:text-gray-300 transition-colors duration-300">
+          {status}
+        </p>
+      )}
     </section>
   );
 }

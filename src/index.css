@@ -19,3 +19,30 @@
 .animate-float {
   animation: float infinite ease-in-out;
 }
+/* Remove all list styling from Scrollspy */
+.scrollspy-nav ul,
+.scrollspy-nav li,
+nav[class*="scrollspy"] ul,
+nav[class*="scrollspy"] li {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Alternative: Force remove bullets from all nav lists */
+nav ul,
+nav li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Active nav item styling */
+.active-nav-item {
+  color: rgb(37 99 235) !important; /* blue-600 */
+  font-weight: 600;
+}
+
+.dark .active-nav-item {
+  color: rgb(192 132 252) !important; /* purple-400 */
+}
