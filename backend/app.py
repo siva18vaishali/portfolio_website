@@ -6,17 +6,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 app = Flask(__name__)
+
+# CORS configuration for production
 CORS(app)
 
 # Mail config
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'siva04vaishali@gmail.com'   # your Gmail
-app.config['MAIL_PASSWORD'] = 'orkl kqld wsep uind'     # app password
-app.config['MAIL_DEFAULT_SENDER'] = 'siva04vaishali@gmail.com'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
 
 mail = Mail(app)
 
@@ -30,18 +31,19 @@ def contact():
         return '', 200
         
     try:
+        if not request.is_json:
+            return jsonify({'status': 'error', 'message': 'Content-Type must be application/json'}), 400
+            
         data = request.get_json()
         if not data:
             return jsonify({'status': 'error', 'message': 'No JSON data received'}), 400
             
-        print("Received data:", data)
-        
-        name = data.get('name')
-        email = data.get('email')
-        message = data.get('message')
+        name = data.get('name', '').strip()
+        email = data.get('email', '').strip()
+        message = data.get('message', '').strip()
 
-        if not all([name, email, message]):
-            return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
+        if not name or not email or not message:
+            return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
         
         msg = Message(
             subject=f"Portfolio Contact: {name}",
@@ -53,8 +55,7 @@ def contact():
         return jsonify({'status': 'success', 'message': 'Message sent successfully!'})
     
     except Exception as e:
-        print("Error:", e)
-        return jsonify({'status': 'error', 'message': 'Internal server error'}), 500
+        return jsonify({'status': 'error', 'message': 'Failed to send email'}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
