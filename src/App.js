@@ -636,7 +636,7 @@ function Contact() {
             <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Direct communication</p>
             <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">+91 6366275532</p>
             <a 
-              href="tel:+91YOUR_PHONE_NUMBER"
+              href="tel:+91 6366275532"
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
