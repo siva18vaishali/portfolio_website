@@ -4,15 +4,17 @@ import { GraduationCap, School, BookOpen} from "lucide-react";
 import { Download, Target, Heart, Code } from "lucide-react";
 import DarkModeToggle from "./components/DarkModeToggle";
 import Scrollspy from "react-scrollspy";  
+import { Menu, X } from 'lucide-react';
 
 
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about','projects', 'skills', 'education', 'contact'];
+      const sections = ['home', 'projects', 'skills', 'about', 'education', 'contact'];
       const scrollY = window.pageYOffset + 100;
 
       sections.forEach(section => {
@@ -51,34 +53,24 @@ function Navbar() {
           </span>
         </div>
 
-        {/* Navigation with colored translucent capsules */}
+        {/* Desktop Navigation with Less Opaque Active Highlighting */}
         <nav className="hidden md:flex items-center space-x-1 p-1.5 bg-white/10 dark:bg-gray-900/10 backdrop-blur-md rounded-full border border-white/20 dark:border-gray-700/20 shadow-lg">
           <a 
             href="#home" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('home') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
             }`}
           >
             Home
           </a>
           <a 
-            href="#about" 
-            className={`px-4 py-2 rounded-full transition-all duration-300 ${
-              isActive('about') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
-            }`}
-          >
-            About Me
-          </a>
-          <a 
             href="#projects" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('projects') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
             }`}
           >
             Projects
@@ -87,18 +79,28 @@ function Navbar() {
             href="#skills" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('skills') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
             }`}
           >
             Skills
           </a>
           <a 
+            href="#about" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('about') 
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
+            }`}
+          >
+            About Me
+          </a>
+          <a 
             href="#education" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('education') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
             }`}
           >
             Education
@@ -107,8 +109,8 @@ function Navbar() {
             href="#contact" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('contact') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+                ? 'bg-blue-500/30 dark:bg-purple-500/30 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/50 dark:border-purple-400/30' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/20 dark:hover:bg-purple-500/20 hover:text-blue-600 dark:hover:text-purple-300'
             }`}
           >
             Contact
@@ -117,7 +119,92 @@ function Navbar() {
             <DarkModeToggle />
           </div>
         </nav>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </div>
+
+      {/* Mobile Menu with Active Highlighting */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-white/20">
+          <div className="container mx-auto p-4 space-y-2">
+            <a 
+              href="#home" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('home') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </a>
+            <a 
+              href="#projects" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('projects') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Projects
+            </a>
+            <a 
+              href="#skills" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('skills') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Skills
+            </a>
+            <a 
+              href="#about" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('about') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About Me
+            </a>
+            <a 
+              href="#education" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('education') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Education
+            </a>
+            <a 
+              href="#contact" 
+              className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                isActive('contact') 
+                  ? 'bg-blue-500/20 dark:bg-purple-500/20 text-blue-700 dark:text-purple-300 font-semibold border border-blue-300/30 dark:border-purple-400/30' 
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/10 dark:hover:bg-purple-500/10'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </a>
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <DarkModeToggle />
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -433,15 +520,15 @@ function Education() {
   const timeline = [
     {
       degree: "B.E. in Information Science Engineering",
-      institution: "R N S Institute of Technology",
+      institution: "R N S Institute of Technology", 
       year: "2022 - 2026",
-      details: "CGPA: 9.44/10",
+      details: "CGPA: 9.44",
       icon: <GraduationCap className="w-5 h-5 text-white" />,
     },
     {
       degree: "Pre-University (PUC)",
       institution: "Deeksha C F L PU College",
-      year: "2020 - 2022",
+      year: "2020 - 2022", 
       details: "Percentage: 96.33%",
       icon: <BookOpen className="w-5 h-5 text-white" />,
     },
@@ -459,37 +546,54 @@ function Education() {
       id="education"
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20 transition-colors duration-300"
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white transition-colors duration-300">
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white transition-colors duration-300 text-center px-4">
         Education
       </h2>
 
-      {/* Timeline wrapper */}
-      <div className="relative flex gap-12 px-12 justify-center w-full max-w-6xl mx-auto">
-        <div className="relative flex gap-12 px-6 min-w-[900px] mx-auto justify-center items-start">
-          
-          {/* Timeline line (only under cards) */}
-          <div className="absolute top-[24px] left-[calc(3rem+24px)] right-[calc(3rem+24px)] h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 z-0"></div>
+      {/* Mobile Stack Layout */}
+      <div className="md:hidden w-full max-w-md mx-auto px-6 space-y-8">
+        {timeline.map((item, idx) => (
+          <div
+            key={idx}
+            className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-blue-100 dark:border-gray-700 hover:shadow-2xl hover:-translate-y-2 transition transform duration-300 text-center"
+          >
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-md flex items-center justify-center">
+              {item.icon}
+            </div>
+            <h3 className="font-semibold text-lg text-blue-600 dark:text-blue-400 mb-2">
+              {item.degree}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300 mb-2">{item.institution}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{item.year}</p>
+            <p className="text-gray-700 dark:text-gray-300 font-medium">{item.details}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Timeline Layout */}
+      <div className="hidden md:block relative w-full max-w-6xl mx-auto px-6">
+        <div className="relative flex justify-between items-start">
+          {/* Timeline line */}
+          <div className="absolute top-6 left-24 right-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 z-0"></div>
           
           {timeline.map((item, idx) => (
             <div
               key={idx}
-              className="relative flex flex-col items-center min-w-[250px]"
+              className="relative flex flex-col items-center w-64"
             >
               {/* Icon on timeline */}
-              <div
-                className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-md flex items-center justify-center z-10"
-              >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-md flex items-center justify-center z-10">
                 {item.icon}
               </div>
 
-              {/* Expanded Card with Hover Animation */}
-              <div className="mt-8 w-64 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg border border-blue-100 dark:border-gray-700 text-center hover:shadow-2xl hover:-translate-y-2 transition transform duration-300">
-                <h3 className="font-semibold text-lg text-blue-600 dark:text-blue-400">
+              {/* Card */}
+              <div className="mt-8 w-full bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-blue-100 dark:border-gray-700 text-center hover:shadow-2xl hover:-translate-y-2 transition transform duration-300">
+                <h3 className="font-semibold text-lg text-blue-600 dark:text-blue-400 mb-2">
                   {item.degree}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300">{item.institution}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{item.year}</p>
-                <p className="text-gray-700 dark:text-gray-300">{item.details}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">{item.institution}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{item.year}</p>
+                <p className="text-gray-700 dark:text-gray-300 font-medium">{item.details}</p>
               </div>
             </div>
           ))}
