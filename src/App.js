@@ -12,7 +12,7 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'projects', 'skills', 'about', 'education', 'contact'];
+      const sections = ['home', 'about','projects', 'skills', 'education', 'contact'];
       const scrollY = window.pageYOffset + 100;
 
       sections.forEach(section => {
@@ -64,6 +64,16 @@ function Navbar() {
             Home
           </a>
           <a 
+            href="#about" 
+            className={`px-4 py-2 rounded-full transition-all duration-300 ${
+              isActive('about') 
+                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
+                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
+            }`}
+          >
+            About Me
+          </a>
+          <a 
             href="#projects" 
             className={`px-4 py-2 rounded-full transition-all duration-300 ${
               isActive('projects') 
@@ -82,16 +92,6 @@ function Navbar() {
             }`}
           >
             Skills
-          </a>
-          <a 
-            href="#about" 
-            className={`px-4 py-2 rounded-full transition-all duration-300 ${
-              isActive('about') 
-                ? 'bg-blue-500/80 dark:bg-purple-500/80 text-white font-semibold shadow-md' 
-                : 'text-gray-700 dark:text-gray-300 hover:bg-blue-500/30 dark:hover:bg-purple-500/30 hover:text-blue-700 dark:hover:text-purple-300'
-            }`}
-          >
-            About Me
           </a>
           <a 
             href="#education" 
@@ -191,8 +191,8 @@ function Projects() {
     {
       title: "SignMate - AI Driven Multimodal ISL Sign Language Recognition",
       description:
-        "An AI-powered application that recognizes Indian sign language gestures in real-time using MediaPipe and Support Vector Machine (SVM), with text, voice output, and multi-language translation features.",
-      tech: ["Python", "MediaPipe", "SVM", "React", "Tailwind"],
+        "An AI-powered real-time application that recognizes Indian Sign Language (ISL) gestures using MediaPipe, SVM, and deep learning (CNN-LSTM) models, featuring live text display, voice output, and multi-language translation for inclusive communication.",
+      tech: ["Python", "MediaPipe", "SVM", "CNN-LSTM", "React", "Tailwind"],
       link: "#",
     },
     {
@@ -300,51 +300,72 @@ function Projects() {
 }
 
 
-
 function Skills() {
-  const skills = [
-    // Programming Languages
-    { name: "Java", icon: "☕" },
-    { name: "Python", icon: "🐍" },
-    { name: "C", icon: "📘" },
-    { name: "JavaScript", icon: "⚡" },
-
-    // Frameworks & Libraries
-    { name: "React", icon: "⚛️" },
-    { name: "Tailwind CSS", icon: "🎨" },
-    { name: "Flask", icon: "🔥" },
-    { name: "Streamlit", icon: "📺" },
-
-    // Databases & Cloud
-    { name: "SQL", icon: "🗄️" },
-    //{ name: "AWS", icon: "☁️" },
-    { name: "Power BI", icon: "📊" },
-
-    // AI/ML & Tools
-    { name: "AI/ML", icon: "🤖" },
-    { name: "Generative AI", icon: "✨" },
-    { name: "MediaPipe", icon: "🖐️" },
-
-    // Core Concepts
-    { name: "Problem Solving (DSA)", icon: "🧠" },
-    //{ name: "Git/GitHub", icon: "🌐" },
+  const skillCategories = [
+    {
+      category: "Programming Languages",
+      icon: "💻",
+      skills: ["Java", "Python", "C", "JavaScript"]
+    },
+    {
+      category: "Frontend & Frameworks", 
+      icon: "🎨",
+      skills: ["React", "Tailwind CSS", "HTML/CSS", "Streamlit"]
+    },
+    {
+      category: "Backend & Databases",
+      icon: "⚙️", 
+      skills: ["Flask", "SQL", "REST APIs"]
+    },
+    {
+      category: "AI/ML & Data Science",
+      icon: "🤖",
+      skills: ["Machine Learning", "Generative AI", "MediaPipe", "NLP", "Data Visualization", "Power BI"]
+    },
+    {
+      category: "Cloud & Tools",
+      icon: "☁️",
+      skills: ["AWS", "Git/GitHub", "Problem Solving (DSA)", "Data Structures", "Algorithms"]
+    }
   ];
 
   return (
     <section
       id="skills"
-      className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 py-20 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 py-20"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 py-20 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300"
     >
-      <div className="max-w-5xl mx-auto text-center p-6">
-        <h2 className="text-3xl md:text-4xl font-bold mb-10 text-gray-900 dark:text-white transition-colors duration-300">Skills</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-          {skills.map((skill, index) => (
+      <div className="max-w-6xl mx-auto p-6">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white text-center transition-colors duration-300">
+          Skills & Technologies
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {skillCategories.map((category, categoryIndex) => (
             <div
-              key={index}
-              className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 shadow-lg rounded-xl hover:scale-105 transition-transform text-gray-900 dark:text-gray-200 transition-colors duration-300"
+              key={categoryIndex}
+              className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6
+              flex flex-col h-full hover:shadow-2xl hover:-translate-y-2
+              transition transform duration-300 text-left border border-white/20 dark:border-gray-700/30"
             >
-              <span className="text-4xl">{skill.icon}</span>
-              <p className="mt-2 font-medium">{skill.name}</p>
+              {/* Category Header */}
+              <div className="flex items-center mb-4">
+                <span className="text-2xl mr-3">{category.icon}</span>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  {category.category}
+                </h3>
+              </div>
+
+              {/* Skills List */}
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill, skillIndex) => (
+                  <span
+                    key={skillIndex}
+                    className="px-3 py-1 text-sm bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 dark:from-gray-700 dark:to-gray-600 dark:text-gray-200 rounded-full transition-colors duration-300"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -414,7 +435,7 @@ function Education() {
       degree: "B.E. in Information Science Engineering",
       institution: "R N S Institute of Technology",
       year: "2022 - 2026",
-      details: "CGPA: 9.44",
+      details: "CGPA: 9.44/10",
       icon: <GraduationCap className="w-5 h-5 text-white" />,
     },
     {
@@ -438,7 +459,9 @@ function Education() {
       id="education"
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-20 transition-colors duration-300"
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white transition-colors duration-300">Education</h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-gray-900 dark:text-white transition-colors duration-300">
+        Education
+      </h2>
 
       {/* Timeline wrapper */}
       <div className="relative flex gap-12 px-12 justify-center w-full max-w-6xl mx-auto">
@@ -446,7 +469,7 @@ function Education() {
           
           {/* Timeline line (only under cards) */}
           <div className="absolute top-[24px] left-[calc(3rem+24px)] right-[calc(3rem+24px)] h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 z-0"></div>
-
+          
           {timeline.map((item, idx) => (
             <div
               key={idx}
@@ -459,8 +482,8 @@ function Education() {
                 {item.icon}
               </div>
 
-              {/* Expanded Card */}
-              <div className="mt-8 w-64 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-blue-100 dark:border-gray-700 text-center hover:shadow-lg transition-all duration-300">
+              {/* Expanded Card with Hover Animation */}
+              <div className="mt-8 w-64 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg border border-blue-100 dark:border-gray-700 text-center hover:shadow-2xl hover:-translate-y-2 transition transform duration-300">
                 <h3 className="font-semibold text-lg text-blue-600 dark:text-blue-400">
                   {item.degree}
                 </h3>
@@ -478,123 +501,139 @@ function Education() {
 
 
 function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("Sending...");
-
-    try {
-      const res = await fetch("http://127.0.0.1:5000/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        setStatus("✅ Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("❌ Failed to send.");
-      }
-    } catch (error) {
-      console.error(error);
-      setStatus("⚠️ Error occurred.");
-    }
-  };
-
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center justify-center 
-      bg-gradient-to-r from-blue-50 to-purple-50 
-      dark:from-gray-900 dark:to-gray-800 
-      px-6 py-12 transition-colors duration-300"
+      className="min-h-screen flex flex-col items-center justify-center
+      bg-gradient-to-r from-blue-50 to-purple-50
+      dark:from-gray-900 dark:to-gray-800
+      px-6 py-20 transition-colors duration-300"
     >
-      <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-        Get in Touch
-      </h2>
-      <p className="text-gray-600 dark:text-gray-300 mb-8 text-center max-w-xl">
-        Feel free to reach out for collaborations, opportunities, or just to say hi!
-      </p>
-
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white dark:bg-gray-800 
-        shadow-lg rounded-2xl p-8 space-y-4 
-        transition-colors duration-300"
-      >
-        <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Your Name"
-            required
-            className="w-full border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
-            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your Email"
-            required
-            className="w-full border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
-            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-            Message
-          </label>
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Your Message"
-            rows="4"
-            required
-            className="w-full border border-gray-300 dark:border-gray-600 
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
-            rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 
-          text-white font-semibold py-2 px-6 rounded-lg 
-          hover:opacity-90 transition"
-        >
-          Send Message
-        </button>
-      </form>
-
-      {status && (
-        <p className="mt-4 text-gray-700 dark:text-gray-300 transition-colors duration-300">
-          {status}
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+          Get in Touch
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-12 text-lg max-w-2xl mx-auto">
+          Feel free to reach out for collaborations, opportunities, or just to say hi!
+          I'm always open to discussing new projects and opportunities.
         </p>
-      )}
+
+        {/* Contact Links Grid - Updated to 3 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          
+          {/* Phone */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Phone</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Direct communication</p>
+            <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">+91 6366275532</p>
+            <a 
+              href="tel:+91YOUR_PHONE_NUMBER"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              Call Now
+            </a>
+          </div>
+
+          {/* Email */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+              <FaEnvelope className="text-xl text-white" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Email</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Let's start a conversation</p>
+            <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">siva04vaishali@gmail.com</p>
+            <a 
+              href="mailto:siva04vaishali@gmail.com"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
+            >
+              <FaEnvelope className="mr-2" />
+              Send Email
+            </a>
+          </div>
+
+          {/* LinkedIn */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
+              <FaLinkedin className="text-xl text-white" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">LinkedIn</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Connect professionally</p>
+            <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">Siva Vaishali B</p>
+            <a 
+              href="https://linkedin.com/in/siva-vaishali-b-39620225a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
+            >
+              <FaLinkedin className="mr-2" />
+              Connect
+            </a>
+          </div>
+
+          {/* GitHub */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex items-center justify-center">
+              <FaGithub className="text-xl text-white" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">GitHub</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Check out my projects</p>
+            <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">siva18vaishali</p>
+            <a 
+              href="https://github.com/siva18vaishali"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
+            >
+              <FaGithub className="mr-2" />
+              View Profile
+            </a>
+          </div>
+
+          {/* Instagram */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
+              <FaInstagram className="text-xl text-white" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Instagram</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm">Follow my journey</p>
+            <p className="text-gray-700 dark:text-gray-200 font-medium mb-4">siva18vaishali</p>
+            <a 
+              href="https://instagram.com/siva18vaishali"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:opacity-90 transition duration-300 text-sm"
+            >
+              <FaInstagram className="mr-2" />
+              Follow
+            </a>
+          </div>
+
+        </div>
+
+        {/* Professional Note */}
+        <div className="mt-12 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto">
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Professional Availability</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            I'm currently available for:
+          </p>
+          <ul className="text-gray-600 dark:text-gray-300 text-left list-disc list-inside space-y-1">
+            <li>Internship opportunities in AI/ML and Full Stack Development</li>
+            <li>Collaborative projects and research work</li>
+            <li>Freelance development projects</li>
+          </ul>
+          <p className="text-gray-600 dark:text-gray-300 mt-4">
+            Feel free to reach out through any platform above. I typically respond within 24 hours!
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
@@ -602,31 +641,26 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow z-50 transition-colors duration-300 from-blue-500 to-purple-500 text-black/white py-6 mt-10 border-t border-white/20">
+    <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow z-50 transition-colors duration-300 py-6 mt-10 border-t border-white/20">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between px-6">
         {/* Copyright */}
-        <p className="text-sm">&copy; 2025 Siva Vaishali B. All rights reserved.</p>
-
-        {/* Social Links */}
-        <div className="flex space-x-6 mt-4 md:mt-0">
-          {/* Email with tooltip */}
-          <div className="relative group">
-            <a href="mailto:siva04vaishali@gmail.com" target="_blank" rel="noopener noreferrer">
-              <FaEnvelope className="text-2xl hover:text-gray-200 cursor-pointer" />
-            </a>
-            <span className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs bg-black text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-              siva04vaishali@gmail.com
-            </span>
-          </div>
-
-          <a href="https://linkedin.com/in/siva-vaishali-b-39620225a" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="text-2xl hover:text-gray-200" />
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          &copy; 2025 Siva Vaishali B. All rights reserved.
+        </p>
+        
+        {/* Minimal contact link */}
+        <div className="mt-4 md:mt-0 flex items-center space-x-4">
+          <a 
+            href="mailto:siva04vaishali@gmail.com"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+          >
+            Email
           </a>
-          <a href="https://github.com/siva18vaishali" target="_blank" rel="noopener noreferrer">
-            <FaGithub className="text-2xl hover:text-gray-200" />
-          </a>
-          <a href="https://instagram.com/siva18vaishali" target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="text-2xl hover:text-gray-200" />
+          <a 
+            href="#contact"
+            className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+          >
+            Contact
           </a>
         </div>
       </div>
@@ -641,9 +675,9 @@ function App() {
       <Navbar />
       <main className="pt-20">
         <Home />
+        <AboutMe />
         <Projects />
         <Skills />
-        <AboutMe />
         <Education />
         <Contact />
       </main>

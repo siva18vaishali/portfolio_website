@@ -1,25 +1,42 @@
-from flask import Flask, request, jsonify
-from flask_mail import Mail, Message
-from flask_cors import CORS
-import os
-from dotenv import load_dotenv
+import sys
+import traceback
 
-load_dotenv()
+try:
+    from flask import Flask, request, jsonify
+    from flask_mail import Mail, Message
+    from flask_cors import CORS
+    import os
+    from dotenv import load_dotenv
+    
+    print("All imports successful")
+    
+    load_dotenv()
+    print("Environment variables loaded")
 
-app = Flask(__name__)
+    app = Flask(__name__)
+    print("Flask app created")
 
-# CORS configuration for production
-CORS(app)
+    # CORS configuration
+    CORS(app)
+    print("CORS configured")
 
-# Mail config
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
+    # Mail config
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
+    
+    print("Mail config set")
 
-mail = Mail(app)
+    mail = Mail(app)
+    print("Mail extension initialized")
+
+except Exception as e:
+    print(f"ERROR during imports/setup: {str(e)}")
+    traceback.print_exc()
+    sys.exit(1)
 
 @app.route('/')
 def home():
@@ -55,8 +72,7 @@ def contact():
         return jsonify({'status': 'success', 'message': 'Message sent successfully!'})
     
     except Exception as e:
+        print(f"Contact error: {str(e)}")
         return jsonify({'status': 'error', 'message': 'Failed to send email'}), 500
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+# Remove the if __name__ block entirely since Gunicorn runs the app
